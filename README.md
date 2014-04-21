@@ -1,3 +1,8 @@
-# Phaser Boilerplate
+# Attack from above
 
-A starting point for a game with Phaser, with sample game (flappy birds clone).
+A work in progress scrolling shooter
+
+## Todo
+
+- add music
+- add more enemies
