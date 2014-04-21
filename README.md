@@ -6,3 +6,7 @@ A work in progress scrolling shooter
 
 - add music
 - add more enemies
+
+## Bugs
+
+- game sometimes crashes after restart
