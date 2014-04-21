@@ -27,10 +27,10 @@ module.exports = {
     this.labelTitle = game.add.text(20, 20, "Tap to start", style);
     this.labelTitle.alpha = 0;
 
-    this.highscoreLabel = game.add.text(20, 280, "High Score: " + this.highscore, style);
+    this.highscoreLabel = game.add.text(20, 430, "High Score: " + this.highscore, style);
 
     if (lastscore) {
-      this.lastscoreLabel = game.add.text(20, 240, "Last Score: " + lastscore, style);
+      this.lastscoreLabel = game.add.text(20, 390, "Last Score: " + lastscore, style);
     }
 
     tween = this.add.tween(this.background)
