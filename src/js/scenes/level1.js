@@ -20,7 +20,7 @@ module.exports = {
     this.bullets = game.add.group();
     this.bullets.enableBody = true;
     this.bullets.physicsBodyType = Phaser.Physics.ARCADE;
-    this.bullets.createMultiple(20, 'game_sprites', 1);
+    this.bullets.createMultiple(20, 'bullets', 1);
     this.bullets.setAll('checkWorldBounds', true);
     this.bullets.setAll('outOfBoundsKill', true);
 
@@ -39,7 +39,7 @@ module.exports = {
 
     this.score = 0;
     this.style = {
-      font: '30px Arial',
+      font: '30px "VT323"',
       fill: '#fff',
       align: 'center'
     };
@@ -51,15 +51,16 @@ module.exports = {
     this.infoLabel = game.add.text(game.world.centerX, game.world.centerY - 15, "Wave: 1", this.style);
     this.infoLabel.anchor.set(0.5, 0);
     game.time.events.add(1000, this.removeInfoLabel, this);
+
+    this.sfx = game.add.audio('sfx');
+    this.sfx.addMarker('shoot', 0, 0.3);
+    this.sfx.addMarker('enemyExplode', 0.3, 0.4);
+    this.sfx.addMarker('playerExplode', 0.8, 1.3);
   },
 
   update: function () {
     if (this.player.inWorld === false) {
       this.restartGame();
-    }
-
-    if (this.player.body.position.x < 0 || this.player.body.position.x > 290) {
-      this.player.body.velocity.x = -(this.player.body.velocity.x * 0.5);
     }
 
     game.physics.arcade.overlap(this.player, this.enemys, this.restartGame, null, this);
@@ -79,6 +80,16 @@ module.exports = {
       this.waveComplete();
     }
 
+    if (this.player.body.position.x < 0 || this.player.body.position.x > 290) {
+      this.player.body.velocity.x = -(this.player.body.velocity.x * 0.5);
+
+      if (this.player.body.position.x < 0) {
+        this.player.body.position.x = 0;
+      } else if (this.player.body.position.x > 290) {
+        this.player.body.position.x = 290;
+      }
+    }
+
   },
 
   distroyEnemy: function (bullet, enemy) {
@@ -86,19 +97,21 @@ module.exports = {
     enemy.damage(20);
     if (!enemy.alive) {
       this.score += 1;
+      this.sfx.play('enemyExplode');
     }
   },
 
   shoot: function () {
     var x, y, bullet;
 
-    x = this.player.body.position.x;
+    x = this.player.body.position.x + 13;
     y = this.player.body.position.y;
 
     bullet = this.bullets.getFirstDead();
     if (bullet) {
       bullet.reset(x, y);
       bullet.body.velocity.y = -200;
+      this.sfx.play('shoot');
     }
   },
 
@@ -129,14 +142,14 @@ module.exports = {
   waveComplete: function () {
     this.wave.complete = true;
     game.time.events.remove(this.enemyTimer);
-    game.time.events.add(Phaser.Timer.SECOND * 4, this.startNewWave, this);
+    game.time.events.add(Phaser.Timer.SECOND * 6, this.startNewWave, this);
   },
 
   startNewWave: function () {
     this.wave = new Wave(this.currentWave); // send in previous wave
 
     this.currentWave = this.wave.currentWave;
-    this.infoLabel.setText("Wave " + this.currentWave);
+    this.infoLabel.setText("Wave " + this.currentWave.toString());
     this.infoLabel.alpha = 1;
     game.time.events.add(1000, this.removeInfoLabel, this);
 
@@ -153,6 +166,7 @@ module.exports = {
   },
 
   restartGame: function () {
+    this.sfx.play('playerExplode');
 
     var previousHighscore = localStorage.getItem("highscore");
     if (!previousHighscore || previousHighscore < this.score) {

@@ -38,10 +38,15 @@ gulp.task('markup', function () {
     .pipe(gulp.dest('bin'));
 });
 
-gulp.task('assets', function () {
+gulp.task('assets', ['sound-assets'], function () {
   return gulp.src(['src/assets/*.png', 'src/assets/*jpg'])
     .pipe(imagemin())
     .pipe(gulp.dest('bin/assets'));
+});
+
+gulp.task('sound-assets', function () {
+  return gulp.src(['src/assets/fx/*'])
+    .pipe(gulp.dest('bin/assets/fx'));
 });
 
 gulp.task('watch', ['watch-scripts', 'watch-markup']);

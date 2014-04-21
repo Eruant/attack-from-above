@@ -13,7 +13,12 @@ module.exports = {
 
     this.game.load.image('menu_background', 'assets/menu_background.png');
     this.game.load.spritesheet('game_sprites', 'assets/game_sprites.png', 32, 32);
+    this.game.load.spritesheet('bullets', 'assets/bullets.png', 4, 4);
 
+    this.game.load.audio('sfx', [
+      'assets/fx/sounds.mp3',
+      'assets/fx/sounds.wav'
+    ]);
   },
 
   create: function () {

@@ -11,7 +11,7 @@ module.exports = {
       highscore = localStorage.getItem("highscore"),
       lastscore = localStorage.getItem("lastscore"),
       style = {
-        font: '30px Arial',
+        font: '30px "VT323"',
         fill: '#fff',
         align: 'center'
       };

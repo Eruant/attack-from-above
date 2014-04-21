@@ -7,7 +7,6 @@
 
 /*globals require*/
 
-
 var game = require('./game'),
     boot = require('./scenes/boot.js'),
     preloader = require('./scenes/preloader'),
