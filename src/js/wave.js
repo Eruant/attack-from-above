@@ -7,6 +7,11 @@ function Wave(previousWaveNumber) {
   this.currentWave = previousWaveNumber + 1;
   this.enemiesInWave = this.currentWave * 3;
   this.enemyTypes = Math.ceil(Math.random() * this.types);
+  this.complete = false;
+  this.strength = this.currentWave * 4;
+  if (this.strength > 100) {
+    this.strength = 100;
+  }
 
 }
 

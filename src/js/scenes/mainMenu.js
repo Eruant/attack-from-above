@@ -12,7 +12,8 @@ module.exports = {
       lastscore = localStorage.getItem("lastscore"),
       style = {
         font: '30px Arial',
-        fill: '#fff'
+        fill: '#fff',
+        align: 'center'
       };
 
     if (highscore) {
@@ -24,13 +25,16 @@ module.exports = {
     this.background = this.add.sprite(0, 0, 'menu_background');
     this.background.alpha = 0;
 
-    this.labelTitle = game.add.text(20, 20, "Tap to start", style);
+    this.labelTitle = game.add.text(game.world.centerX, 20, "Tap to start", style);
     this.labelTitle.alpha = 0;
+    this.labelTitle.anchor.set(0.5, 0);
 
-    this.highscoreLabel = game.add.text(20, 430, "High Score: " + this.highscore, style);
+    this.highscoreLabel = game.add.text(game.world.centerX, 430, "High Score: " + this.highscore, style);
+    this.highscoreLabel.anchor.set(0.5, 0);
 
     if (lastscore) {
-      this.lastscoreLabel = game.add.text(20, 390, "Last Score: " + lastscore, style);
+      this.lastscoreLabel = game.add.text(game.world.centerX, 390, "Last Score: " + lastscore, style);
+      this.lastscoreLabel.anchor.set(0.5, 0);
     }
 
     tween = this.add.tween(this.background)
